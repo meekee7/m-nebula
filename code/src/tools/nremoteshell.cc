@@ -94,7 +94,7 @@ main(int argc, const char** argv)
         ipcClient.FreeReplyMsgNode(prompt);
 
         // get command
-        lineOk = (gets(line) > 0);
+        lineOk = (fgets(line, ARRAYSIZE(line), stdin) != nullptr);
 
         if (strcmp("exit", line) == 0)
         {

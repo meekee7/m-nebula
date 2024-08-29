@@ -68,7 +68,7 @@ extern "C" {
 	/*	Win32 doesn't seem to have these functions. 
 	**	Therefore implement inline versions of these functions here.
 	*/
-	
+	/*
 	__inline long int 
 	lrint (double flt)
 	{	int intgr;
@@ -92,6 +92,7 @@ extern "C" {
 			
 		return intgr ;
 	}
+    */
 
 #else
 

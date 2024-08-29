@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
                "  Hint: '.getcmds' gives list of commands for selected object\n");
     }
 
-    nKernelServer *ks = new nKernelServer();
+    nKernelServer *ks = new nKernelServer(0, nullptr);
     if (ks)
     {
         // Set up logging
@@ -189,7 +189,7 @@ int main(int argc, char *argv[])
                         fflush(stdout);
 
                         // get user input
-                        lineOk = (gets(line) > 0);
+                        lineOk = (fgets(line, ARRAYSIZE(line), stdin) != nullptr);
                         if (strlen(line) > 0)
                         {
                             const char* result = 0;

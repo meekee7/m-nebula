@@ -49,7 +49,7 @@ DllMain(HINSTANCE hInst, DWORD reason, LPVOID reserved)
             // space, we don't need to care about overwriting
             // the pointer (I guess)
             printf("tclnebula: DLL_PROCESS_ATTACH\n");
-            ks = new nKernelServer();
+            ks = new nKernelServer(0, nullptr);
             n_assert(ks);
             break;
 
@@ -104,7 +104,7 @@ extern "C" __declspec(dllexport) int Tclnebula_Init(Tcl_Interp *interp)
 extern "C" __declspec(dllexport) int Tclnebula_SafeInit(Tcl_Interp *interp)
 {
     // create a Nebula kernel server object
-    nKernelServer *ks = new nKernelServer();
+    nKernelServer *ks = new nKernelServer(0, nullptr);
     n_assert(ks);
 
     // create the Nebula Tcl server object and initialize

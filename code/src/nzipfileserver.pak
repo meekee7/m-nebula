@@ -1,0 +1,24 @@
+#--------------------------------------------------------------------
+#   nzipfileserver.pak
+#   ============
+#--------------------------------------------------------------------
+
+#--------------------------------------------------------------------
+beginmodule nzipfileserver
+    setdir file
+    setfiles { ioapi nzipdirectory nzipfile nzipfileserver_cmds
+               nzipfileserver_main unzip }
+    setheaders nterrainnode
+endmodule
+#--------------------------------------------------------------------
+begintarget nzipfile
+    settype package
+    setmods { nzipfileserver }
+    setdepends { nnebula }
+    setlibs_win32  { nkernel.lib nnebula.lib }
+    setlibs_unix   { nkernel nnebula m }
+    setlibs_macosx { nkernel nnebula m }
+endtarget
+#--------------------------------------------------------------------
+#   EOF
+#--------------------------------------------------------------------

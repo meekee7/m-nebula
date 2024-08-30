@@ -1,0 +1,24 @@
+#--------------------------------------------------------------------
+#   nnpkfileserver.pak
+#   ============
+#--------------------------------------------------------------------
+
+#--------------------------------------------------------------------
+beginmodule nnpkfileserver
+    setdir file
+    setfiles { ioapi nnpkdirectory nnpkfile nnpkfileserver_cmds
+               nnpkfileserver_main nnpkfilewrapper }
+    setheaders nterrainnode
+endmodule
+#--------------------------------------------------------------------
+begintarget nnpkfile
+    settype package
+    setmods { nnpkfileserver }
+    setdepends { nnebula }
+    setlibs_win32  { nkernel.lib nnebula.lib }
+    setlibs_unix   { nkernel nnebula m }
+    setlibs_macosx { nkernel nnebula m }
+endtarget
+#--------------------------------------------------------------------
+#   EOF
+#--------------------------------------------------------------------

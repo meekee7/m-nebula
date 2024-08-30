@@ -68,16 +68,15 @@ nZipFile::Open(const char* fileName, const char* accessMode)
 		return true;
 	}
 
-	char buf[N_MAXPATH];
-	char buf2[N_MAXPATH];
-	this->fs->ManglePath(fileName, buf2, sizeof(buf2));
-	this->fs->MakeAbsolute(buf2, buf, sizeof(buf));
+	stl_string buf;
+	this->fs->ManglePath(fileName, buf);
+	this->fs->MakeAbsolute(buf);
 	
 	this->iszip = true;
 	
 	//n_assert(stricmp(accessMode, "r") == 0);
 
-	nZipEntry* entry = ((nZipFileServer*) this->fs)->LookFor(buf);
+	nZipEntry* entry = ((nZipFileServer*) this->fs)->LookFor(buf.c_str());
 	if(entry == NULL)
 		return false;
 

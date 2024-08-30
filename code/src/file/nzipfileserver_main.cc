@@ -86,12 +86,11 @@ nZipEntry::~nZipEntry()
 void
 nZipFileServer::SetRootDirectory(const char* dir)
 {
-	char buf[N_MAXPATH];
-	char buf2[N_MAXPATH];
-	this->ManglePath(dir, buf2, sizeof(buf2));
-	this->MakeAbsolute(buf2, buf, sizeof(buf));
+	stl_string buf;
+	this->ManglePath(dir, buf);
+	this->MakeAbsolute(buf);
 
-	strcpy(this->rootPath, buf);
+	strcpy(this->rootPath, buf.c_str());
 
 	const char* entryName;
 	if(toc)
@@ -105,7 +104,7 @@ nZipFileServer::SetRootDirectory(const char* dir)
 		dtoc = NULL;
 	}
 	nDirectory* folder = nFileServer2::NewDirectoryObject();
-	if(!folder->Open(buf))
+	if(!folder->Open(buf.c_str()))
 	{
 		delete folder;
 		return;
@@ -119,7 +118,7 @@ nZipFileServer::SetRootDirectory(const char* dir)
 				const char* ext = entryName + strlen(entryName) - 4;
 				if (n_stricmp(ext, ".zip") == 0)
                 {
-					this->Scan(entryName, buf);
+					this->Scan(entryName, buf.c_str());
                 }
 			}
 		} while (folder->SetToNextEntry());

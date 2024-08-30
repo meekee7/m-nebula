@@ -46,8 +46,8 @@ nZipDirectory::Open(const char* dirName)
 
 	this->iszip = false;
 
-	char buf[N_MAXPATH];
-	this->fs->ManglePath(dirName, buf, sizeof(buf));
+	stl_string buf;
+	this->fs->ManglePath(dirName, buf);
 
     DWORD attr;
     ulong last_chr_index;
@@ -58,22 +58,22 @@ nZipDirectory::Open(const char* dirName)
     // nicht schon ist. Ein Filename gilt als absolut, wenn
     // er mit einem "/", einem "\" anfaengt, oder mit einem
     // Laufwerksbuchstabe anfaengt (2.Buchstabe ein ":").
-    this->fs->MakeAbsolute(buf, this->path, sizeof(this->path));
+    this->fs->MakeAbsolute(this->path);
 	this->handle = NULL;
     
     // evtl. angehaengte Slashes entfernen...
-    last_chr_index = strlen(this->path)-1;    
+    last_chr_index = strlen(this->path.c_str())-1;    
     last_chr = this->path[last_chr_index];
 	if ((last_chr == '/') || (last_chr == '\\')) this->path[last_chr_index]=0;
 
     // testen, ob File existiert und ein Dir ist...
-    attr = GetFileAttributes(this->path);
+    attr = GetFileAttributes(this->path.c_str());
     if ((attr != 0xffffffff) && (attr & FILE_ATTRIBUTE_DIRECTORY)) 
 		retval=true;
     else                                                           
 	{
 		this->iszip = true;
-		if(((nZipFileServer*)this->fs)->FindDirectory(this->path))
+		if(((nZipFileServer*)this->fs)->FindDirectory(this->path.c_str()))
 			retval = true;
 		else
 			retval = false;
@@ -114,7 +114,7 @@ nZipDirectory::SetToFirstEntry()
 		FindClose(this->handle);
 
 	char tmpName[N_MAXPATH];
-    strcpy(tmpName,this->path);
+    strcpy(tmpName,this->path.c_str());
     strcat(tmpName,"/*.*");
 	this->handle = FindFirstFile(tmpName,&(this->findData));
 	
@@ -261,10 +261,10 @@ nZipDirectory::IsInDirectory(nZipEntry* entry)
 {
 	n_assert(this->IsOpen());
 
-	char* n = strstr(entry->name, this->path);
+	char* n = strstr(entry->name, this->path.c_str());
 	if(n != entry->name)
 		return false;
-	n += strlen(this->path);
+	n += strlen(this->path.c_str());
 	if(strlen(n) == 0)
 		return false;
 	n++;

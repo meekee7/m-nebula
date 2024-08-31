@@ -37,6 +37,8 @@ nApplication::nApplication() :
 	app_file.StripExtension();
 	this->port_name = this->app_name = app_file.c_str();	
 
+	this->ext_script_map["bs"] = "nluaserver";
+	this->ext_script_map["lua"] = "nluaserver";
 	this->ext_script_map["tcl"] = "ntclserver";
 	this->ext_script_map["ntcl"] = "ntclserver";
 	this->ext_script_map["npy"] = "npythonserver";

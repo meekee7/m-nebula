@@ -251,13 +251,13 @@ bool nLuaServer::WriteComment(nFile *file, const char *str)
 void nLuaServer::write_select_statement(nFile *file, nRoot *o, nRoot *owner)
 {
 	// get relative path from owner to o and write select statement
-	char relpath[N_MAXPATH];
+	stl_string relpath;
 	_indent(++this->indent_level, this->indent_buf);
-	owner->GetRelPath(o, relpath, sizeof(relpath));
+	owner->GetRelPath(o, relpath);
 
 	file->PutS(this->indent_buf);
 	file->PutS("sel('");
-	file->PutS(relpath);
+	file->PutS(relpath.c_str());
 	file->PutS("')\n");
 }
 
@@ -331,13 +331,13 @@ bool nLuaServer::WriteEndObject(nFile *file, nRoot *o, nRoot *owner)
 	n_assert(o);
 
 	// get relative path from owner to o and write select statement
-	char relpath[N_MAXPATH];
+	stl_string relpath;
 	_indent(--this->indent_level, this->indent_buf);
-	o->GetRelPath(owner, relpath, sizeof(relpath));
+	o->GetRelPath(owner, relpath);
 
 	file->PutS(this->indent_buf);
 	file->PutS("sel('");
-	file->PutS(relpath);
+	file->PutS(relpath.c_str());
 	file->PutS("')\n");
 
 	return true;
